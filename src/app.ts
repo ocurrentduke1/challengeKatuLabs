@@ -1,5 +1,7 @@
 // src/app.ts
 import express from 'express';
+import employeeRoutes from './modules/employees/employee.routes.js';
+import requestRoutes from './modules/requests/request.routes.js';
 
 export const app = express();
 
@@ -8,3 +10,6 @@ app.use(express.json());
 app.get('/health', (_req, res) => {
   res.json({ status: 'ok' });
 });
+
+app.use('/employees', employeeRoutes)
+app.use('/requests', requestRoutes);
