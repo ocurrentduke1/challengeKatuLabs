@@ -6,6 +6,7 @@ import {
   RequestStatus,
 } from "./request.types.js";
 import { EmployeeService } from "../employees/employee.service.js";
+import { ForbiddenError, NotFoundError, ValidationError } from "../../utils/errors.js";
 
 export class RequestService {
   constructor(
@@ -18,7 +19,7 @@ export class RequestService {
     // 1. Verificar que el empleado existe
     const employee = await this.employeeRepo.findById(input.employeeId);
     if (!employee) {
-      throw new Error("Employee not found");
+      throw new NotFoundError("Employee not found");
     }
 
     // 2. Validar traslapes con solicitudes APPROVED
@@ -29,7 +30,7 @@ export class RequestService {
     );
 
     if (overlapping.length > 0) {
-      throw new Error("Request overlaps with an approved request");
+      throw new ValidationError("Request overlaps with an approved request");
     }
 
     // 3. Validar saldo si es VACATION
@@ -44,7 +45,7 @@ export class RequestService {
         1;
 
       if (requestedDays > balance) {
-        throw new Error("Insufficient vacation balance");
+        throw new ValidationError("Insufficient vacation balance");
       }
     }
 
@@ -57,11 +58,11 @@ export class RequestService {
   ): Promise<VacationRequest> {
     const request = await this.requestRepo.findById(requestId);
     if (!request) {
-      throw new Error("Request not found");
+      throw new NotFoundError("Request not found");
     }
 
     if (request.status !== "PENDING") {
-      throw new Error("Only pending requests can be approved");
+      throw new ValidationError("Only pending requests can be approved");
     }
 
     // Revalidar saldo
@@ -76,7 +77,7 @@ export class RequestService {
         1;
 
       if (requestedDays > balance) {
-        throw new Error("Insufficient vacation balance");
+        throw new ValidationError("Insufficient vacation balance");
       }
     }
 
@@ -89,11 +90,11 @@ export class RequestService {
   ): Promise<VacationRequest> {
     const request = await this.requestRepo.findById(requestId);
     if (!request) {
-      throw new Error("Request not found");
+      throw new NotFoundError("Request not found");
     }
 
     if (request.status !== "PENDING") {
-      throw new Error("Only pending requests can be rejected");
+      throw new ValidationError("Only pending requests can be rejected");
     }
 
     return this.requestRepo.updateStatus(requestId, "REJECTED", approverId);
@@ -105,15 +106,15 @@ export class RequestService {
   ): Promise<VacationRequest> {
     const request = await this.requestRepo.findById(requestId);
     if (!request) {
-      throw new Error("Request not found");
+      throw new NotFoundError("Request not found");
     }
 
     if (request.employeeId !== employeeId) {
-      throw new Error("Cannot cancel another employee request");
+      throw new ForbiddenError();
     }
 
     if (request.status !== "PENDING") {
-      throw new Error("Only pending requests can be cancelled");
+      throw new ValidationError("Only pending requests can be cancelled");
     }
 
     return this.requestRepo.updateStatus(requestId, "CANCELLED");
@@ -155,7 +156,7 @@ export class RequestService {
   async getRequestById(id: string): Promise<VacationRequest> {
     const request = await this.requestRepo.findById(id);
     if (!request) {
-      throw new Error("Request not found");
+      throw new NotFoundError("Request not found");
     }
     return request;
   }

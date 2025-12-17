@@ -2,6 +2,7 @@
 import express from 'express';
 import employeeRoutes from './modules/employees/employee.routes.js';
 import requestRoutes from './modules/requests/request.routes.js';
+import { errorMiddleware } from './middlewares/error.middleware.js';
 
 export const app = express();
 
@@ -13,3 +14,4 @@ app.get('/health', (_req, res) => {
 
 app.use('/employees', employeeRoutes)
 app.use('/requests', requestRoutes);
+app.use(errorMiddleware)

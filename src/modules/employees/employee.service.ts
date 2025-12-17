@@ -1,6 +1,7 @@
 import { EmployeeRepository } from './employee.repository.js';
 import { CreateEmployeeInput, Employee } from './employee.types.js';
 import { RequestRepository } from '../requests/request.repository.js';
+import { NotFoundError } from '../../utils/errors.js';
 
 export class EmployeeService {
   constructor(
@@ -15,7 +16,7 @@ export class EmployeeService {
   async getEmployeeById(id: string): Promise<Employee> {
     const employee = await this.employeeRepo.findById(id);
     if (!employee) {
-      throw new Error('Employee not found');
+      throw new NotFoundError('Employee not found');
     }
     return employee;
   }
