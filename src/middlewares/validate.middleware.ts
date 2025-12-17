@@ -13,7 +13,7 @@ export const validate =
     }
 
     throw new ValidationError(
-      result.error.issues[0]?.message
+      result.error.issues.map(i => i.message).join(', ')
     );
     
   };

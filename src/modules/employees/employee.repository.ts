@@ -31,6 +31,16 @@ export class EmployeeRepository {
     return this.mapRowToEmployee(result.rows[0]);
   }
 
+  async findByEmail(email: string): Promise<Employee | null> {
+    const result = await pool.query(
+      `SELECT * FROM employees WHERE email = $1`,
+      [email]
+    );
+
+    if (result.rows.length === 0) return null;
+    return this.mapRowToEmployee(result.rows[0]);
+  }
+
   async findAll(): Promise<Employee[]> {
     const result = await pool.query(`SELECT * FROM employees`);
     return result.rows.map(this.mapRowToEmployee);

@@ -1,5 +1,5 @@
-import { Request, Response, NextFunction } from 'express';
-import { RequestService } from './request.service.js';
+import { Request, Response, NextFunction } from "express";
+import { RequestService } from "./request.service.js";
 
 export class RequestController {
   private service = new RequestService();
@@ -18,7 +18,7 @@ export class RequestController {
       const { employeeId, status } = req.query;
       const requests = await this.service.listRequests({
         employeeId: employeeId as string,
-        status: status as string
+        status: status as string,
       });
       res.json(requests);
     } catch (err) {
@@ -30,7 +30,7 @@ export class RequestController {
     try {
       const { id } = req.params;
       if (!id) {
-        res.status(400).json({ error: 'ID is required' });
+        res.status(400).json({ error: "ID is required" });
         return;
       }
       const request = await this.service.getRequestById(id);
@@ -41,36 +41,42 @@ export class RequestController {
   };
 
   approve = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { id } = req.params;
-      if (!id) {
-        res.status(400).json({ error: 'ID is required' });
-        return;
-      }
-      // En el paso 7 simularemos auth
-      const approverId = req.body.approverId;
-      const request = await this.service.approveRequest(
-        id,
-        approverId
-      );
-      res.json(request);
-    } catch (err) {
-      next(err);
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({
+        error: 'request id is required',
+      });
     }
-  };
+
+    const approverId = req.user!.id;
+
+    const request = await this.service.approveRequest(
+      id,
+      approverId
+    );
+
+    res.json(request);
+  } catch (err) {
+    next(err);
+  }
+};
+
 
   reject = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { id } = req.params;
+
+      // El approver SIEMPRE viene del usuario autenticado
+      const approverId = req.user!.id;
+
       if (!id) {
-        res.status(400).json({ error: 'ID is required' });
-        return;
+        return res.status(400).json({ error: "id is required" });
       }
-      const approverId = req.body.approverId;
-      const request = await this.service.rejectRequest(
-        id,
-        approverId
-      );
+
+      const request = await this.service.rejectRequest(id, approverId);
+
       res.json(request);
     } catch (err) {
       next(err);
@@ -78,20 +84,30 @@ export class RequestController {
   };
 
   cancel = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { id } = req.params;
-      if (!id) {
-        res.status(400).json({ error: 'ID is required' });
-        return;
-      }
-      const { employeeId } = req.body;
-      const request = await this.service.cancelRequest(
-        id,
-        employeeId
-      );
-      res.json(request);
-    } catch (err) {
-      next(err);
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({
+        error: 'request id is required',
+      });
     }
-  };
+
+    if (!req.user) {
+      return res.status(401).json({
+        error: 'Unauthorized',
+      });
+    }
+
+    const request = await this.service.cancelRequest(
+      id,
+      req.user.id
+    );
+
+    res.json(request);
+  } catch (err) {
+    next(err);
+  }
+};
+
 }
