@@ -6,7 +6,11 @@ import {
   RequestStatus,
 } from "./request.types.js";
 import { EmployeeService } from "../employees/employee.service.js";
-import { ForbiddenError, NotFoundError, ValidationError } from "../../utils/errors.js";
+import {
+  ForbiddenError,
+  NotFoundError,
+  ValidationError,
+} from "../../utils/errors.js";
 
 export class RequestService {
   constructor(
@@ -16,6 +20,32 @@ export class RequestService {
   ) {}
 
   async createRequest(input: CreateRequestInput): Promise<VacationRequest> {
+    // 0️⃣ Validar fechas
+    const { startDate, endDate } = input;
+
+    if (!startDate || !endDate) {
+      throw new ValidationError("Start date and end date are required");
+    }
+
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    if (isNaN(start.getTime()) || isNaN(end.getTime())) {
+      throw new ValidationError("Invalid date format");
+    }
+
+    if (start > end) {
+      throw new ValidationError("Start date cannot be after end date");
+    }
+
+    // (opcional pero recomendado)
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (start < today) {
+      throw new ValidationError("Start date cannot be in the past");
+    }
+
     // 1. Verificar que el empleado existe
     const employee = await this.employeeRepo.findById(input.employeeId);
     if (!employee) {
@@ -25,8 +55,8 @@ export class RequestService {
     // 2. Validar traslapes con solicitudes APPROVED
     const overlapping = await this.requestRepo.findApprovedByEmployeeInRange(
       input.employeeId,
-      input.startDate,
-      input.endDate
+      start,
+      end
     );
 
     if (overlapping.length > 0) {
@@ -40,16 +70,18 @@ export class RequestService {
       );
 
       const requestedDays =
-        (input.endDate.getTime() - input.startDate.getTime()) /
-          (1000 * 60 * 60 * 24) +
-        1;
+        (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24) + 1;
 
       if (requestedDays > balance) {
         throw new ValidationError("Insufficient vacation balance");
       }
     }
 
-    return this.requestRepo.create(input);
+    return this.requestRepo.create({
+      ...input,
+      startDate: start,
+      endDate: end,
+    });
   }
 
   async approveRequest(
@@ -65,20 +97,36 @@ export class RequestService {
       throw new ValidationError("Only pending requests can be approved");
     }
 
-    // Revalidar saldo
     if (request.type === "VACATION") {
-      const balance = await this.employeeService.getVacationBalance(
-        request.employeeId
-      );
+      const employee = await this.employeeRepo.findById(request.employeeId);
+      if (!employee) {
+        throw new NotFoundError("Employee not found");
+      }
 
       const requestedDays =
         (request.endDate.getTime() - request.startDate.getTime()) /
           (1000 * 60 * 60 * 24) +
         1;
 
-      if (requestedDays > balance) {
+      const totalBalance =
+        employee.annualVacationDays + employee.carriedOverDays;
+
+      if (requestedDays > totalBalance) {
         throw new ValidationError("Insufficient vacation balance");
       }
+
+      // 🔻 Descuento priorizando carriedOverDays
+      let remaining = requestedDays;
+
+      const usedCarriedOver = Math.min(employee.carriedOverDays, remaining);
+      remaining -= usedCarriedOver;
+
+      const usedAnnual = remaining;
+
+      await this.employeeRepo.updateVacationDays(employee.id, {
+        carriedOverDays: employee.carriedOverDays - usedCarriedOver,
+        annualVacationDays: employee.annualVacationDays - usedAnnual,
+      });
     }
 
     return this.requestRepo.updateStatus(requestId, "APPROVED", approverId);
