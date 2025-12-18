@@ -20,69 +20,128 @@ export class RequestService {
   ) {}
 
   async createRequest(input: CreateRequestInput): Promise<VacationRequest> {
-    // 0️⃣ Validar fechas
-    const { startDate, endDate } = input;
+  const {
+    employeeId,
+    type,
+    startDate,
+    endDate,
+    startTime,
+    endTime,
+  } = input;
 
-    if (!startDate || !endDate) {
-      throw new ValidationError("Start date and end date are required");
+  // 0️⃣ Validar fechas base
+  if (!startDate || !endDate) {
+    throw new ValidationError('Start date and end date are required');
+  }
+
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+
+  if (isNaN(start.getTime()) || isNaN(end.getTime())) {
+    throw new ValidationError('Invalid date format');
+  }
+
+  if (start > end) {
+    throw new ValidationError('Start date cannot be after end date');
+  }
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  if (start < today) {
+    throw new ValidationError('Start date cannot be in the past');
+  }
+
+  // 1️⃣ Verificar que el empleado existe
+  const employee = await this.employeeRepo.findById(employeeId);
+  if (!employee) {
+    throw new NotFoundError('Employee not found');
+  }
+
+  // 2️⃣ Validaciones específicas por tipo
+  if (type === 'VACATION') {
+    // 🔒 Vacaciones NO usan horas
+    if (startTime || endTime) {
+      throw new ValidationError(
+        'startTime and endTime must be null for vacations'
+      );
     }
 
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-
-    if (isNaN(start.getTime()) || isNaN(end.getTime())) {
-      throw new ValidationError("Invalid date format");
-    }
-
-    if (start > end) {
-      throw new ValidationError("Start date cannot be after end date");
-    }
-
-    // (opcional pero recomendado)
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    if (start < today) {
-      throw new ValidationError("Start date cannot be in the past");
-    }
-
-    // 1. Verificar que el empleado existe
-    const employee = await this.employeeRepo.findById(input.employeeId);
-    if (!employee) {
-      throw new NotFoundError("Employee not found");
-    }
-
-    // 2. Validar traslapes con solicitudes APPROVED
-    const overlapping = await this.requestRepo.findApprovedByEmployeeInRange(
-      input.employeeId,
-      start,
-      end
-    );
-
-    if (overlapping.length > 0) {
-      throw new ValidationError("Request overlaps with an approved request");
-    }
-
-    // 3. Validar saldo si es VACATION
-    if (input.type === "VACATION") {
-      const balance = await this.employeeService.getVacationBalance(
-        input.employeeId
+    // 2.1 Validar traslapes por FECHA
+    const overlapping =
+      await this.requestRepo.findApprovedByEmployeeInRange(
+        employeeId,
+        start,
+        end
       );
 
-      const requestedDays =
-        (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24) + 1;
-
-      if (requestedDays > balance) {
-        throw new ValidationError("Insufficient vacation balance");
-      }
+    if (overlapping.length > 0) {
+      throw new ValidationError(
+        'Vacation request overlaps with an approved request'
+      );
     }
 
-    return this.requestRepo.create({
-      ...input,
-      startDate: start,
-      endDate: end,
-    });
+    // 2.2 Validar saldo
+    const balance = await this.employeeService.getVacationBalance(employeeId);
+
+    const requestedDays =
+      (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24) + 1;
+
+    if (requestedDays > balance) {
+      throw new ValidationError('Insufficient vacation balance');
+    }
   }
+
+  if (type === 'PERMISSION') {
+    // 🔒 Permisos SON por tiempo
+    if (!startTime || !endTime) {
+      throw new ValidationError(
+        'startTime and endTime are required for permissions'
+      );
+    }
+
+    // Deben ser el mismo día
+    if (start.getTime() !== end.getTime()) {
+      throw new ValidationError(
+        'Permissions must start and end on the same day'
+      );
+    }
+
+    const startT = new Date(`1970-01-01T${startTime}`);
+    const endT = new Date(`1970-01-01T${endTime}`);
+
+    if (isNaN(startT.getTime()) || isNaN(endT.getTime())) {
+      throw new ValidationError('Invalid time format');
+    }
+
+    if (startT >= endT) {
+      throw new ValidationError('startTime must be before endTime');
+    }
+
+    // 2.3 Validar traslapes por FECHA + HORA
+    const overlapping =
+      await this.requestRepo.findApprovedPermissionsOverlapping(
+        employeeId,
+        start,
+        startTime,
+        endTime
+      );
+
+    if (overlapping.length > 0) {
+      throw new ValidationError(
+        'Permission overlaps with an approved permission'
+      );
+    }
+  }
+
+  // 3️⃣ Crear solicitud
+  return this.requestRepo.create({
+    ...input,
+    startDate: start,
+    endDate: end,
+  });
+}
+
 
   async approveRequest(
     requestId: string,

@@ -1,9 +1,9 @@
-import { pool } from '../../config/db.js';
+import { pool } from "../../config/db.js";
 import {
   VacationRequest,
   CreateRequestInput,
-  RequestStatus
-} from './request.types.js';
+  RequestStatus,
+} from "./request.types.js";
 
 export class RequestRepository {
   async create(input: CreateRequestInput): Promise<VacationRequest> {
@@ -29,7 +29,7 @@ export class RequestRepository {
         input.endDate,
         input.startTime ?? null,
         input.endTime ?? null,
-        input.reason
+        input.reason,
       ]
     );
 
@@ -37,10 +37,9 @@ export class RequestRepository {
   }
 
   async findById(id: string): Promise<VacationRequest | null> {
-    const result = await pool.query(
-      `SELECT * FROM requests WHERE id = $1`,
-      [id]
-    );
+    const result = await pool.query(`SELECT * FROM requests WHERE id = $1`, [
+      id,
+    ]);
 
     if (result.rows.length === 0) return null;
     return this.mapRowToRequest(result.rows[0]);
@@ -64,7 +63,7 @@ export class RequestRepository {
     }
 
     const whereClause =
-      conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
+      conditions.length > 0 ? `WHERE ${conditions.join(" AND ")}` : "";
 
     const result = await pool.query(
       `SELECT * FROM requests ${whereClause} ORDER BY created_at DESC`,
@@ -92,6 +91,29 @@ export class RequestRepository {
     );
 
     return result.rows.map(this.mapRowToRequest);
+  }
+
+  async findApprovedPermissionsOverlapping(
+    employeeId: string,
+    date: Date,
+    startTime: string,
+    endTime: string
+  ) {
+    const result = await pool.query(
+      `
+    SELECT *
+    FROM requests
+    WHERE employee_id = $1
+      AND type = 'PERMISSION'
+      AND status = 'APPROVED'
+      AND start_date = $2
+      AND start_time < $4
+      AND end_time > $3
+    `,
+      [employeeId, date, startTime, endTime]
+    );
+
+    return result.rows;
   }
 
   async updateStatus(
@@ -127,7 +149,7 @@ export class RequestRepository {
       status: row.status,
       approvedBy: row.approved_by,
       createdAt: row.created_at,
-      updatedAt: row.updated_at
+      updatedAt: row.updated_at,
     };
   }
 }
