@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { EmployeeRepository } from '../modules/employees/employee.repository.js';
 import { ForbiddenError } from '../utils/errors.js';
+import { verifyToken } from '../utils/jwt.js';
 
 declare global {
   namespace Express {
@@ -13,29 +13,33 @@ declare global {
   }
 }
 
-const employeeRepo = new EmployeeRepository();
-
-export const authMiddleware = async (
+export const authMiddleware = (
   req: Request,
   _res: Response,
   next: NextFunction
 ) => {
-  const userId = req.header('x-user-id');
+  const authHeader = req.header('authorization');
 
-  if (!userId) {
-    throw new ForbiddenError('Missing authentication header');
+  if (!authHeader) {
+    throw new ForbiddenError('Missing Authorization header');
   }
 
-  const employee = await employeeRepo.findById(userId);
+  const [type, token] = authHeader.split(' ');
 
-  if (!employee) {
-    throw new ForbiddenError('Invalid user');
+  if (type !== 'Bearer' || !token) {
+    throw new ForbiddenError('Invalid Authorization format');
   }
 
-  req.user = {
-    id: employee.id,
-    role: employee.role
-  };
+  try {
+    const payload = verifyToken(token);
 
-  next();
+    req.user = {
+      id: payload.sub,
+      role: payload.role
+    };
+
+    next();
+  } catch {
+    throw new ForbiddenError('Invalid or expired token');
+  }
 };
