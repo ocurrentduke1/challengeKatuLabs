@@ -41,28 +41,24 @@ export class RequestController {
   };
 
   approve = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const { id } = req.params;
+    try {
+      const { id } = req.params;
 
-    if (!id) {
-      return res.status(400).json({
-        error: 'request id is required',
-      });
+      if (!id) {
+        return res.status(400).json({
+          error: "request id is required",
+        });
+      }
+
+      const approverId = req.user!.id;
+
+      const request = await this.service.approveRequest(id, approverId);
+
+      res.json(request);
+    } catch (err) {
+      next(err);
     }
-
-    const approverId = req.user!.id;
-
-    const request = await this.service.approveRequest(
-      id,
-      approverId
-    );
-
-    res.json(request);
-  } catch (err) {
-    next(err);
-  }
-};
-
+  };
 
   reject = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -84,30 +80,44 @@ export class RequestController {
   };
 
   cancel = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const { id } = req.params;
+    try {
+      const { id } = req.params;
 
-    if (!id) {
-      return res.status(400).json({
-        error: 'request id is required',
-      });
+      if (!id) {
+        return res.status(400).json({
+          error: "request id is required",
+        });
+      }
+
+      if (!req.user) {
+        return res.status(401).json({
+          error: "Unauthorized",
+        });
+      }
+
+      const request = await this.service.cancelRequest(id, req.user.id);
+
+      res.json(request);
+    } catch (err) {
+      next(err);
     }
+  };
 
-    if (!req.user) {
-      return res.status(401).json({
-        error: 'Unauthorized',
-      });
+  getHistory = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
+
+      if (!id) {
+        return res.status(400).json({
+          error: "request id is required",
+        });
+      }
+
+      const history = await this.service.getRequestHistory(id);
+
+      res.json(history);
+    } catch (err) {
+      next(err);
     }
-
-    const request = await this.service.cancelRequest(
-      id,
-      req.user.id
-    );
-
-    res.json(request);
-  } catch (err) {
-    next(err);
-  }
-};
-
+  };
 }

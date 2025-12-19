@@ -10,6 +10,7 @@ const controller = new RequestController();
 router.post('/', validate(createRequestSchema), controller.create);
 router.get('/', controller.list);
 router.get('/:id', controller.getById);
+router.get('/:id/history', requireRole('APPROVER'), controller.getHistory);
 router.patch('/:id/approve', requireRole('APPROVER'), controller.approve);
 router.patch('/:id/reject', requireRole('APPROVER'), controller.reject);
 router.patch('/:id/cancel', requireRole('EMPLOYEE'), controller.cancel);
