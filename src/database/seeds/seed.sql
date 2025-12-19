@@ -1,13 +1,19 @@
--- Limpia datos anteriores
-TRUNCATE TABLE employees RESTART IDENTITY CASCADE;
-TRUNCATE TABLE requests RESTART IDENTITY CASCADE;
+-- BEGIN;
+
+-- =========================
+-- LIMPIEZA
+-- =========================
 TRUNCATE TABLE request_status_history RESTART IDENTITY CASCADE;
+TRUNCATE TABLE requests RESTART IDENTITY CASCADE;
+TRUNCATE TABLE employees RESTART IDENTITY CASCADE;
+
+-- =========================
+-- EMPLOYEES
+-- -- =========================
 
 -- APPROVER
-INSERT INTO employees (
-    id, name, email, role, annual_vacation_days, carried_over_days, created_at, updated_at
-) VALUES (
-  'a8b6d412-c66d-487a-832f-7017ddfcf348',
+INSERT INTO employees VALUES (
+  'b9a342fa-54a7-4761-9eea-0225e9db2b7f',
   'Laura Manager',
   'laura.manager@katu.com',
   'APPROVER',
@@ -17,30 +23,55 @@ INSERT INTO employees (
   NOW()
 );
 
--- EMPLOYEE 1
-INSERT INTO employees (
-   id, name, email, role, annual_vacation_days, carried_over_days, created_at, updated_at
-) VALUES (
-  'a849f1d5-d223-4b92-823e-9ad41e24ef5c',
-  'Carlos Employee',
-  'carlos@katu.com',
-  'EMPLOYEE',
-  12,
-  3,
-  NOW(),
-  NOW()
-);
+-- EMPLOYEES
+INSERT INTO employees VALUES
+('e3272e61-b945-4ff7-876f-f67653eeef07','Carlos Employee','carlos@katu.com','EMPLOYEE',12,3,NOW(),NOW()),
+('5ec9c836-7f89-4d85-b0bb-b9878bbc0862','Ana Employee','ana@katu.com','EMPLOYEE',10,0,NOW(),NOW()),
+('22104f97-557e-4d6e-bab1-82e215ae26d6','Luis Employee','luis@katu.com','EMPLOYEE',15,2,NOW(),NOW()),
+('c98d8a06-b794-4c01-a788-6427d9da4f3e','Maria Employee','maria@katu.com','EMPLOYEE',8,1,NOW(),NOW()),
+('0242572c-8a84-4819-8245-af18f8ea2429','Jose Employee','jose@katu.com','EMPLOYEE',20,5,NOW(),NOW());
 
--- EMPLOYEE 2
-INSERT INTO employees (
-   id, name, email, role, annual_vacation_days, carried_over_days, created_at, updated_at
-) VALUES (
-  '7b2eca07-7b9b-4ef3-a4d4-c63bd6db53dc',
-  'Ana Employee',
-  'ana@katu.com',
-  'EMPLOYEE',
-  10,
-  0,
-  NOW(),
-  NOW()
-);
+-- =========================
+-- REQUESTS (10 VACATION)
+-- -- =========================
+-- INSERT INTO requests VALUES
+-- ('aaaaaaaa-1111-1111-1111-111111111111','22222222-2222-2222-2222-222222222222','VACATION','2024-07-01','2024-07-05',NULL,NULL,'PENDING',NOW(),NOW()),
+-- ('aaaaaaaa-2222-2222-2222-222222222222','33333333-3333-3333-3333-333333333333','VACATION','2024-07-10','2024-07-12',NULL,NULL,'PENDING',NOW(),NOW()),
+-- ('aaaaaaaa-3333-3333-3333-333333333333','44444444-4444-4444-4444-444444444444','VACATION','2024-08-01','2024-08-03',NULL,NULL,'PENDING',NOW(),NOW()),
+-- ('aaaaaaaa-4444-4444-4444-444444444444','55555555-5555-5555-5555-555555555555','VACATION','2024-08-15','2024-08-20',NULL,NULL,'PENDING',NOW(),NOW()),
+-- ('aaaaaaaa-5555-5555-5555-555555555555','66666666-6666-6666-6666-666666666666','VACATION','2024-09-01','2024-09-07',NULL,NULL,'PENDING',NOW(),NOW()),
+-- ('aaaaaaaa-6666-6666-6666-666666666666','22222222-2222-2222-2222-222222222222','VACATION','2024-09-10','2024-09-12',NULL,NULL,'PENDING',NOW(),NOW()),
+-- ('aaaaaaaa-7777-7777-7777-777777777777','33333333-3333-3333-3333-333333333333','VACATION','2024-10-01','2024-10-05',NULL,NULL,'PENDING',NOW(),NOW()),
+-- ('aaaaaaaa-8888-8888-8888-888888888888','44444444-4444-4444-4444-444444444444','VACATION','2024-10-10','2024-10-15',NULL,NULL,'PENDING',NOW(),NOW()),
+-- ('aaaaaaaa-9999-9999-9999-999999999999','55555555-5555-5555-5555-555555555555','VACATION','2024-11-01','2024-11-03',NULL,NULL,'PENDING',NOW(),NOW()),
+-- ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa','66666666-6666-6666-6666-666666666666','VACATION','2024-11-10','2024-11-15',NULL,NULL,'PENDING',NOW(),NOW());
+
+-- -- =========================
+-- -- REQUESTS (10 PERMISSION)
+-- -- =========================
+-- INSERT INTO requests VALUES
+-- ('bbbbbbbb-1111-1111-1111-111111111111','22222222-2222-2222-2222-222222222222','PERMISSION','2024-07-03','2024-07-03','09:00','13:00','PENDING',NOW(),NOW()),
+-- ('bbbbbbbb-2222-2222-2222-222222222222','33333333-3333-3333-3333-333333333333','PERMISSION','2024-07-08','2024-07-08','10:00','16:00','PENDING',NOW(),NOW()),
+-- ('bbbbbbbb-3333-3333-3333-333333333333','44444444-4444-4444-4444-444444444444','PERMISSION','2024-08-05','2024-08-05','09:00','12:00','PENDING',NOW(),NOW()),
+-- ('bbbbbbbb-4444-4444-4444-444444444444','55555555-5555-5555-5555-555555555555','PERMISSION','2024-08-18','2024-08-18','11:00','17:00','PENDING',NOW(),NOW()),
+-- ('bbbbbbbb-5555-5555-5555-555555555555','66666666-6666-6666-6666-666666666666','PERMISSION','2024-09-02','2024-09-02','08:00','12:00','PENDING',NOW(),NOW()),
+-- ('bbbbbbbb-6666-6666-6666-666666666666','22222222-2222-2222-2222-222222222222','PERMISSION','2024-09-12','2024-09-12','14:00','18:00','PENDING',NOW(),NOW()),
+-- ('bbbbbbbb-7777-7777-7777-777777777777','33333333-3333-3333-3333-333333333333','PERMISSION','2024-10-02','2024-10-02','09:00','11:00','PENDING',NOW(),NOW()),
+-- ('bbbbbbbb-8888-8888-8888-888888888888','44444444-4444-4444-4444-444444444444','PERMISSION','2024-10-20','2024-10-20','15:00','18:00','PENDING',NOW(),NOW()),
+-- ('bbbbbbbb-9999-9999-9999-999999999999','55555555-5555-5555-5555-555555555555','PERMISSION','2024-11-05','2024-11-05','09:00','12:00','PENDING',NOW(),NOW()),
+-- ('bbbbbbbb-aaaa-aaaa-aaaa-aaaaaaaaaaaa','66666666-6666-6666-6666-666666666666','PERMISSION','2024-11-18','2024-11-18','10:00','14:00','PENDING',NOW(),NOW());
+
+-- -- =========================
+-- -- STATUS HISTORY (1 POR REQUEST)
+-- -- =========================
+-- INSERT INTO request_status_history
+-- SELECT
+--   gen_random_uuid(),
+--   r.id,
+--   'CREATED',
+--   'PENDING',
+--   '11111111-1111-1111-1111-111111111111',
+--   NOW()
+-- FROM requests r;
+
+-- COMMIT;

@@ -13,14 +13,19 @@ export class RequestController {
     }
   };
 
+  // request.controller.ts
   list = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { employeeId, status } = req.query;
-      const requests = await this.service.listRequests({
+      const { employeeId, status, page = "1", limit = "5" } = req.query;
+
+      const result = await this.service.listRequests({
         employeeId: employeeId as string,
         status: status as string,
+        page: Number(page),
+        limit: Number(limit),
       });
-      res.json(requests);
+
+      res.json(result);
     } catch (err) {
       next(err);
     }

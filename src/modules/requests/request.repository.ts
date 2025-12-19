@@ -136,6 +136,57 @@ export class RequestRepository {
     return this.mapRowToRequest(result.rows[0]);
   }
 
+  // request.repository.ts
+  async list(params: {
+    employeeId?: string;
+    status?: string;
+    limit: number;
+    offset: number;
+  }) {
+    const values: any[] = [];
+    const where: string[] = [];
+
+    if (params.employeeId) {
+      values.push(params.employeeId);
+      where.push(`employee_id = $${values.length}`);
+    }
+
+    if (params.status) {
+      values.push(params.status);
+      where.push(`status = $${values.length}`);
+    }
+
+    const whereSql = where.length ? `WHERE ${where.join(" AND ")}` : "";
+
+    const dataQuery = `
+    SELECT *
+    FROM requests
+    ${whereSql}
+    ORDER BY created_at DESC
+    LIMIT $${values.length + 1}
+    OFFSET $${values.length + 2}
+  `;
+
+    const countQuery = `
+    SELECT COUNT(*)::int AS total
+    FROM requests
+    ${whereSql}
+  `;
+
+    const dataResult = await pool.query(dataQuery, [
+      ...values,
+      params.limit,
+      params.offset,
+    ]);
+
+    const countResult = await pool.query(countQuery, values);
+
+    return {
+      data: dataResult.rows,
+      total: countResult.rows[0].total,
+    };
+  }
+
   private mapRowToRequest(row: any): VacationRequest {
     return {
       id: row.id,

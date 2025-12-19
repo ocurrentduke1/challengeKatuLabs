@@ -286,25 +286,46 @@ export class RequestService {
     return undefined;
   }
 
-  async listRequests(filters: {
+  // request.service.ts
+  async listRequests(params: {
     employeeId?: string;
     status?: string;
-  }): Promise<VacationRequest[]> {
-    const parsedFilters: {
+    page: number;
+    limit: number;
+  }) {
+    const page = Math.max(1, params.page || 1);
+    const limit = Math.min(100, Math.max(1, params.limit || 5));
+    const offset = (page - 1) * limit;
+
+    const repoParams: {
       employeeId?: string;
-      status?: RequestStatus;
-    } = {};
+      status?: string;
+      limit: number;
+      offset: number;
+    } = {
+      limit,
+      offset,
+    };
 
-    if (filters.employeeId) {
-      parsedFilters.employeeId = filters.employeeId;
+    if (params.employeeId) {
+      repoParams.employeeId = params.employeeId;
     }
 
-    const parsedStatus = this.parseRequestStatus(filters.status);
-    if (parsedStatus) {
-      parsedFilters.status = parsedStatus;
+    if (params.status) {
+      repoParams.status = params.status;
     }
 
-    return this.requestRepo.findByFilters(parsedFilters);
+    const { data, total } = await this.requestRepo.list(repoParams);
+
+    return {
+      data,
+      meta: {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit),
+      },
+    };
   }
 
   async getRequestById(id: string): Promise<VacationRequest> {
