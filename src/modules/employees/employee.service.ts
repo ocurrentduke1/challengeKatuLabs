@@ -13,7 +13,7 @@ export class EmployeeService {
     const exists = await this.employeeRepo.findByEmail(input.email);
 
     if (exists) {
-      throw new ConflictError("El empleado ya existe");
+      throw new ConflictError("employee already exists with this email");
     }
 
     return this.employeeRepo.create(input);

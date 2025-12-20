@@ -16,6 +16,6 @@ app.get('/health', (_req, res) => {
 
 app.use('/auth', authRoutes);
 app.use('/employees', authMiddleware, employeeRoutes);
-app.use('/requests', requestRoutes);
+app.use('/requests',authMiddleware, requestRoutes);
 
 app.use(errorMiddleware);
