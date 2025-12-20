@@ -11,7 +11,13 @@
 			"name": "getEmployees",
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlMzI3MmU2MS1iOTQ1LTRmZjctODc2Zi1mNjc2NTNlZWVmMDciLCJyb2xlIjoiRU1QTE9ZRUUiLCJpYXQiOjE3NjYyNjQ3MzQsImV4cCI6MTc2NjM1MTEzNH0.aqtmke99HR6y397aBPpF3UNVn_dPFthrMzyDtu7jclA",
+						"type": "text"
+					}
+				],
 				"url": {
 					"raw": "http://localhost:3000/employees",
 					"protocol": "http",
@@ -33,12 +39,12 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhOGI2ZDQxMi1jNjZkLTQ4N2EtODMyZi03MDE3ZGRmY2YzNDgiLCJyb2xlIjoiQVBQUk9WRVIiLCJpYXQiOjE3NjYxMTQ1NDksImV4cCI6MTc2NjIwMDk0OX0.Mq413SwA81WO9tJyImft90Sa-iAyjISC8nUnktoLF9A",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlMzI3MmU2MS1iOTQ1LTRmZjctODc2Zi1mNjc2NTNlZWVmMDciLCJyb2xlIjoiRU1QTE9ZRUUiLCJpYXQiOjE3NjYyNjQ3MzQsImV4cCI6MTc2NjM1MTEzNH0.aqtmke99HR6y397aBPpF3UNVn_dPFthrMzyDtu7jclA",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:3000/employees/a849f1d5-d223-4b92-823e-9ad41e24ef5c",
+					"raw": "http://localhost:3000/employees/e3272e61-b945-4ff7-876f-f67653eeef07",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -46,7 +52,7 @@
 					"port": "3000",
 					"path": [
 						"employees",
-						"a849f1d5-d223-4b92-823e-9ad41e24ef5c"
+						"e3272e61-b945-4ff7-876f-f67653eeef07"
 					]
 				}
 			},
@@ -59,12 +65,12 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhOGI2ZDQxMi1jNjZkLTQ4N2EtODMyZi03MDE3ZGRmY2YzNDgiLCJyb2xlIjoiQVBQUk9WRVIiLCJpYXQiOjE3NjYxMTQ1NDksImV4cCI6MTc2NjIwMDk0OX0.Mq413SwA81WO9tJyImft90Sa-iAyjISC8nUnktoLF9A",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlMzI3MmU2MS1iOTQ1LTRmZjctODc2Zi1mNjc2NTNlZWVmMDciLCJyb2xlIjoiRU1QTE9ZRUUiLCJpYXQiOjE3NjYyNjQ3MzQsImV4cCI6MTc2NjM1MTEzNH0.aqtmke99HR6y397aBPpF3UNVn_dPFthrMzyDtu7jclA",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:3000/requests/e95a75a0-bd15-4ef8-a3a6-606f5fcbf54f",
+					"raw": "http://localhost:3000/requests/022a3add-c15f-4d6e-9bd9-f7532aef19d3",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -72,7 +78,7 @@
 					"port": "3000",
 					"path": [
 						"requests",
-						"e95a75a0-bd15-4ef8-a3a6-606f5fcbf54f"
+						"022a3add-c15f-4d6e-9bd9-f7532aef19d3"
 					]
 				}
 			},
@@ -85,12 +91,12 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhOGI2ZDQxMi1jNjZkLTQ4N2EtODMyZi03MDE3ZGRmY2YzNDgiLCJyb2xlIjoiQVBQUk9WRVIiLCJpYXQiOjE3NjYxMTQ1NDksImV4cCI6MTc2NjIwMDk0OX0.Mq413SwA81WO9tJyImft90Sa-iAyjISC8nUnktoLF9A",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlMzI3MmU2MS1iOTQ1LTRmZjctODc2Zi1mNjc2NTNlZWVmMDciLCJyb2xlIjoiRU1QTE9ZRUUiLCJpYXQiOjE3NjYyNjQ3MzQsImV4cCI6MTc2NjM1MTEzNH0.aqtmke99HR6y397aBPpF3UNVn_dPFthrMzyDtu7jclA",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:3000/requests?employeeId=3b816772-8d74-405d-afcc-d5df54d32053",
+					"raw": "http://localhost:3000/requests?employeeId=e3272e61-b945-4ff7-876f-f67653eeef07",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -102,7 +108,7 @@
 					"query": [
 						{
 							"key": "employeeId",
-							"value": "3b816772-8d74-405d-afcc-d5df54d32053"
+							"value": "e3272e61-b945-4ff7-876f-f67653eeef07"
 						}
 					]
 				}
@@ -116,7 +122,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhOGI2ZDQxMi1jNjZkLTQ4N2EtODMyZi03MDE3ZGRmY2YzNDgiLCJyb2xlIjoiQVBQUk9WRVIiLCJpYXQiOjE3NjYxMTQ1NDksImV4cCI6MTc2NjIwMDk0OX0.Mq413SwA81WO9tJyImft90Sa-iAyjISC8nUnktoLF9A",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlMzI3MmU2MS1iOTQ1LTRmZjctODc2Zi1mNjc2NTNlZWVmMDciLCJyb2xlIjoiRU1QTE9ZRUUiLCJpYXQiOjE3NjYyNjQ3MzQsImV4cCI6MTc2NjM1MTEzNH0.aqtmke99HR6y397aBPpF3UNVn_dPFthrMzyDtu7jclA",
 						"type": "text"
 					}
 				],
@@ -147,12 +153,12 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhOGI2ZDQxMi1jNjZkLTQ4N2EtODMyZi03MDE3ZGRmY2YzNDgiLCJyb2xlIjoiQVBQUk9WRVIiLCJpYXQiOjE3NjYxMTQ1NDksImV4cCI6MTc2NjIwMDk0OX0.Mq413SwA81WO9tJyImft90Sa-iAyjISC8nUnktoLF9A",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlMzI3MmU2MS1iOTQ1LTRmZjctODc2Zi1mNjc2NTNlZWVmMDciLCJyb2xlIjoiRU1QTE9ZRUUiLCJpYXQiOjE3NjYyNjQ3MzQsImV4cCI6MTc2NjM1MTEzNH0.aqtmke99HR6y397aBPpF3UNVn_dPFthrMzyDtu7jclA",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:3000/requests?employeeId=3b816772-8d74-405d-afcc-d5df54d32053&status=PENDING",
+					"raw": "http://localhost:3000/requests?employeeId=e3272e61-b945-4ff7-876f-f67653eeef07&status=PENDING",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -164,7 +170,7 @@
 					"query": [
 						{
 							"key": "employeeId",
-							"value": "3b816772-8d74-405d-afcc-d5df54d32053"
+							"value": "e3272e61-b945-4ff7-876f-f67653eeef07"
 						},
 						{
 							"key": "status",
@@ -182,12 +188,12 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhOGI2ZDQxMi1jNjZkLTQ4N2EtODMyZi03MDE3ZGRmY2YzNDgiLCJyb2xlIjoiQVBQUk9WRVIiLCJpYXQiOjE3NjYxMTQ1NDksImV4cCI6MTc2NjIwMDk0OX0.Mq413SwA81WO9tJyImft90Sa-iAyjISC8nUnktoLF9A",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlMzI3MmU2MS1iOTQ1LTRmZjctODc2Zi1mNjc2NTNlZWVmMDciLCJyb2xlIjoiRU1QTE9ZRUUiLCJpYXQiOjE3NjYyNjQ3MzQsImV4cCI6MTc2NjM1MTEzNH0.aqtmke99HR6y397aBPpF3UNVn_dPFthrMzyDtu7jclA",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:3000/requests",
+					"raw": "http://localhost:3000/requests?page=2",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -195,6 +201,12 @@
 					"port": "3000",
 					"path": [
 						"requests"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						}
 					]
 				}
 			},
@@ -207,10 +219,27 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhOGI2ZDQxMi1jNjZkLTQ4N2EtODMyZi03MDE3ZGRmY2YzNDgiLCJyb2xlIjoiQVBQUk9WRVIiLCJpYXQiOjE3NjYxMTQ1NDksImV4cCI6MTc2NjIwMDk0OX0.Mq413SwA81WO9tJyImft90Sa-iAyjISC8nUnktoLF9A",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlMzI3MmU2MS1iOTQ1LTRmZjctODc2Zi1mNjc2NTNlZWVmMDciLCJyb2xlIjoiRU1QTE9ZRUUiLCJpYXQiOjE3NjYyNjQ3MzQsImV4cCI6MTc2NjM1MTEzNH0.aqtmke99HR6y397aBPpF3UNVn_dPFthrMzyDtu7jclA",
 						"type": "text"
 					}
-				]
+				],
+				"url": {
+					"raw": "http://localhost:3000/requests?page=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"requests"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						}
+					]
+				}
 			},
 			"response": []
 		},
@@ -221,7 +250,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"email\": \"laura.manager@katu.com\"\r\n}",
+					"raw": "{\r\n  \"email\": \"maria@katu.com\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -284,7 +313,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhOGI2ZDQxMi1jNjZkLTQ4N2EtODMyZi03MDE3ZGRmY2YzNDgiLCJyb2xlIjoiQVBQUk9WRVIiLCJpYXQiOjE3NjYxMTQ1NDksImV4cCI6MTc2NjIwMDk0OX0.Mq413SwA81WO9tJyImft90Sa-iAyjISC8nUnktoLF9A",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjOThkOGEwNi1iNzk0LTRjMDEtYTc4OC02NDI3ZDlkYTRmM2UiLCJyb2xlIjoiRU1QTE9ZRUUiLCJpYXQiOjE3NjYyNjU4NDUsImV4cCI6MTc2NjM1MjI0NX0.KWsBmOH9km1Lo7LKdcj8gMoxv8C_IPpP11wxIB8iK7g",
 						"type": "text"
 					},
 					{
@@ -296,7 +325,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"type\": \"VACATION\",\r\n  \"employeeId\": \"3b816772-8d74-405d-afcc-d5df54d32053\",\r\n  \"startDate\": \"2025-12-18\",\r\n  \"endDate\": \"2025-12-24\",\r\n  \"reason\": \"Vacaciones de verano\"\r\n}\r\n",
+					"raw": "{\r\n  \"type\": \"VACATION\",\r\n  \"employeeId\": \"c98d8a06-b794-4c01-a788-6427d9da4f3e\",\r\n  \"startDate\": \"2025-12-21\",\r\n  \"endDate\": \"2025-12-24\",\r\n  \"reason\": \"Vacaciones de verano\"\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -391,12 +420,12 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhOGI2ZDQxMi1jNjZkLTQ4N2EtODMyZi03MDE3ZGRmY2YzNDgiLCJyb2xlIjoiQVBQUk9WRVIiLCJpYXQiOjE3NjYxMTQ1NDksImV4cCI6MTc2NjIwMDk0OX0.Mq413SwA81WO9tJyImft90Sa-iAyjISC8nUnktoLF9A",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiOWEzNDJmYS01NGE3LTQ3NjEtOWVlYS0wMjI1ZTlkYjJiN2YiLCJyb2xlIjoiQVBQUk9WRVIiLCJpYXQiOjE3NjYyNjUwNzUsImV4cCI6MTc2NjM1MTQ3NX0.Z9FWCxU8AU_rqQPRLG-vVKTjnxnIN4DdB6xf-keiG7c",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:3000/requests/8191fbc7-17b6-4457-ad2f-45d702a4ddae/approve",
+					"raw": "http://localhost:3000/requests/1439110c-1eb8-4053-a6ab-c5e8ca23e049/approve",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -404,7 +433,7 @@
 					"port": "3000",
 					"path": [
 						"requests",
-						"8191fbc7-17b6-4457-ad2f-45d702a4ddae",
+						"1439110c-1eb8-4053-a6ab-c5e8ca23e049",
 						"approve"
 					]
 				}

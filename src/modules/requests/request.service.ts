@@ -160,6 +160,20 @@ export class RequestService {
     }
 
     if (request.type === "VACATION") {
+      const overlapping = await this.requestRepo.findApprovedByEmployeeInRange(
+        request.employeeId,
+        request.startDate,
+        request.endDate
+      );
+
+      // Excluir la misma solicitud (por seguridad)
+      const conflicts = overlapping.filter((r) => r.id !== request.id);
+
+      if (conflicts.length > 0) {
+        throw new ValidationError(
+          "Vacation request overlaps with an approved request"
+        );
+      }
       const employee = await this.employeeRepo.findById(request.employeeId);
       if (!employee) {
         throw new NotFoundError("Employee not found");
