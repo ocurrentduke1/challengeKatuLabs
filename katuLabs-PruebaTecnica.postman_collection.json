@@ -1,0 +1,442 @@
+{
+	"info": {
+		"_postman_id": "7af14f31-5acb-48cc-ac59-cf2c94a0db25",
+		"name": "katuLabs-PruebaTecnica",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "45750852",
+		"_collection_link": "https://victormedina-93714.postman.co/workspace/Victor-Medina's-Workspace~f50cf542-2f42-4758-8c77-582d1f40909a/collection/45750852-7af14f31-5acb-48cc-ac59-cf2c94a0db25?action=share&source=collection_link&creator=45750852"
+	},
+	"item": [
+		{
+			"name": "getEmployees",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/employees",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getEmployeeById",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhOGI2ZDQxMi1jNjZkLTQ4N2EtODMyZi03MDE3ZGRmY2YzNDgiLCJyb2xlIjoiQVBQUk9WRVIiLCJpYXQiOjE3NjYxMTQ1NDksImV4cCI6MTc2NjIwMDk0OX0.Mq413SwA81WO9tJyImft90Sa-iAyjISC8nUnktoLF9A",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/employees/a849f1d5-d223-4b92-823e-9ad41e24ef5c",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"employees",
+						"a849f1d5-d223-4b92-823e-9ad41e24ef5c"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getRequestById",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhOGI2ZDQxMi1jNjZkLTQ4N2EtODMyZi03MDE3ZGRmY2YzNDgiLCJyb2xlIjoiQVBQUk9WRVIiLCJpYXQiOjE3NjYxMTQ1NDksImV4cCI6MTc2NjIwMDk0OX0.Mq413SwA81WO9tJyImft90Sa-iAyjISC8nUnktoLF9A",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/requests/e95a75a0-bd15-4ef8-a3a6-606f5fcbf54f",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"requests",
+						"e95a75a0-bd15-4ef8-a3a6-606f5fcbf54f"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getRequestsByUser",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhOGI2ZDQxMi1jNjZkLTQ4N2EtODMyZi03MDE3ZGRmY2YzNDgiLCJyb2xlIjoiQVBQUk9WRVIiLCJpYXQiOjE3NjYxMTQ1NDksImV4cCI6MTc2NjIwMDk0OX0.Mq413SwA81WO9tJyImft90Sa-iAyjISC8nUnktoLF9A",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/requests?employeeId=3b816772-8d74-405d-afcc-d5df54d32053",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"requests"
+					],
+					"query": [
+						{
+							"key": "employeeId",
+							"value": "3b816772-8d74-405d-afcc-d5df54d32053"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getRequestByStatus",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhOGI2ZDQxMi1jNjZkLTQ4N2EtODMyZi03MDE3ZGRmY2YzNDgiLCJyb2xlIjoiQVBQUk9WRVIiLCJpYXQiOjE3NjYxMTQ1NDksImV4cCI6MTc2NjIwMDk0OX0.Mq413SwA81WO9tJyImft90Sa-iAyjISC8nUnktoLF9A",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/requests?status=PENDING",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"requests"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "PENDING"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getRequestByUser&Status",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhOGI2ZDQxMi1jNjZkLTQ4N2EtODMyZi03MDE3ZGRmY2YzNDgiLCJyb2xlIjoiQVBQUk9WRVIiLCJpYXQiOjE3NjYxMTQ1NDksImV4cCI6MTc2NjIwMDk0OX0.Mq413SwA81WO9tJyImft90Sa-iAyjISC8nUnktoLF9A",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/requests?employeeId=3b816772-8d74-405d-afcc-d5df54d32053&status=PENDING",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"requests"
+					],
+					"query": [
+						{
+							"key": "employeeId",
+							"value": "3b816772-8d74-405d-afcc-d5df54d32053"
+						},
+						{
+							"key": "status",
+							"value": "PENDING"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "listRequests",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhOGI2ZDQxMi1jNjZkLTQ4N2EtODMyZi03MDE3ZGRmY2YzNDgiLCJyb2xlIjoiQVBQUk9WRVIiLCJpYXQiOjE3NjYxMTQ1NDksImV4cCI6MTc2NjIwMDk0OX0.Mq413SwA81WO9tJyImft90Sa-iAyjISC8nUnktoLF9A",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/requests",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"requests"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "listPageablesRequests",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhOGI2ZDQxMi1jNjZkLTQ4N2EtODMyZi03MDE3ZGRmY2YzNDgiLCJyb2xlIjoiQVBQUk9WRVIiLCJpYXQiOjE3NjYxMTQ1NDksImV4cCI6MTc2NjIwMDk0OX0.Mq413SwA81WO9tJyImft90Sa-iAyjISC8nUnktoLF9A",
+						"type": "text"
+					}
+				]
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"laura.manager@katu.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createEmployee",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhOGI2ZDQxMi1jNjZkLTQ4N2EtODMyZi03MDE3ZGRmY2YzNDgiLCJyb2xlIjoiQVBQUk9WRVIiLCJpYXQiOjE3NjYxMTQ1NDksImV4cCI6MTc2NjIwMDk0OX0.Mq413SwA81WO9tJyImft90Sa-iAyjISC8nUnktoLF9A",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Ana Tester\",\r\n  \"email\": \"ana@test.com\",\r\n  \"role\": \"EMPLOYEE\",\r\n  \"annualVacationDays\": 10,\r\n  \"carriedOverDays\": 2\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/employees",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createVacationRequest",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhOGI2ZDQxMi1jNjZkLTQ4N2EtODMyZi03MDE3ZGRmY2YzNDgiLCJyb2xlIjoiQVBQUk9WRVIiLCJpYXQiOjE3NjYxMTQ1NDksImV4cCI6MTc2NjIwMDk0OX0.Mq413SwA81WO9tJyImft90Sa-iAyjISC8nUnktoLF9A",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"type\": \"VACATION\",\r\n  \"employeeId\": \"3b816772-8d74-405d-afcc-d5df54d32053\",\r\n  \"startDate\": \"2025-12-18\",\r\n  \"endDate\": \"2025-12-24\",\r\n  \"reason\": \"Vacaciones de verano\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/requests",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"requests"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createPermissionRequest",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhOGI2ZDQxMi1jNjZkLTQ4N2EtODMyZi03MDE3ZGRmY2YzNDgiLCJyb2xlIjoiQVBQUk9WRVIiLCJpYXQiOjE3NjYxMTQ1NDksImV4cCI6MTc2NjIwMDk0OX0.Mq413SwA81WO9tJyImft90Sa-iAyjISC8nUnktoLF9A",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"type\": \"PERMISSION\",\r\n  \"employeeId\": \"3b816772-8d74-405d-afcc-d5df54d32053\",\r\n  \"startDate\": \"2025-12-26\",\r\n  \"endDate\": \"2025-12-26\",\r\n  \"startTime\": \"09:00\",\r\n  \"endTime\": \"11:00\",\r\n  \"reason\": \"Medical appointment\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/requests",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"requests"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cancelRequest",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhOGI2ZDQxMi1jNjZkLTQ4N2EtODMyZi03MDE3ZGRmY2YzNDgiLCJyb2xlIjoiQVBQUk9WRVIiLCJpYXQiOjE3NjYxMTQ1NDksImV4cCI6MTc2NjIwMDk0OX0.Mq413SwA81WO9tJyImft90Sa-iAyjISC8nUnktoLF9A",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/requests/e95a75a0-bd15-4ef8-a3a6-606f5fcbf54f/cancel",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"requests",
+						"e95a75a0-bd15-4ef8-a3a6-606f5fcbf54f",
+						"cancel"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "approveRequest",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhOGI2ZDQxMi1jNjZkLTQ4N2EtODMyZi03MDE3ZGRmY2YzNDgiLCJyb2xlIjoiQVBQUk9WRVIiLCJpYXQiOjE3NjYxMTQ1NDksImV4cCI6MTc2NjIwMDk0OX0.Mq413SwA81WO9tJyImft90Sa-iAyjISC8nUnktoLF9A",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/requests/8191fbc7-17b6-4457-ad2f-45d702a4ddae/approve",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"requests",
+						"8191fbc7-17b6-4457-ad2f-45d702a4ddae",
+						"approve"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RejectRequest",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhOGI2ZDQxMi1jNjZkLTQ4N2EtODMyZi03MDE3ZGRmY2YzNDgiLCJyb2xlIjoiQVBQUk9WRVIiLCJpYXQiOjE3NjYxMTQ1NDksImV4cCI6MTc2NjIwMDk0OX0.Mq413SwA81WO9tJyImft90Sa-iAyjISC8nUnktoLF9A",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/requests/3af12693-31c6-42a1-9835-3500367a2407/reject",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"requests",
+						"3af12693-31c6-42a1-9835-3500367a2407",
+						"reject"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
