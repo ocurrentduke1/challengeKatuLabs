@@ -13,7 +13,6 @@ export class RequestController {
     }
   };
 
-  // request.controller.ts
   list = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { employeeId, status, page = "1", limit = "5" } = req.query;
@@ -69,7 +68,6 @@ export class RequestController {
     try {
       const { id } = req.params;
 
-      // El approver SIEMPRE viene del usuario autenticado
       const approverId = req.user!.id;
 
       if (!id) {

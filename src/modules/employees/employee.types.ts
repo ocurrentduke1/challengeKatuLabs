@@ -13,12 +13,11 @@ export interface Employee {
 
 /**
  * Payload para crear empleados (POST /employees)
- * No incluye campos generados por el sistema
  */
 export interface CreateEmployeeInput {
   name: string;
   email: string;
-  role?: Role; // por defecto EMPLOYEE
+  role?: Role;
   annualVacationDays: number;
   carriedOverDays: number;
 }

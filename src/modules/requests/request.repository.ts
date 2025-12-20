@@ -136,7 +136,6 @@ export class RequestRepository {
     return this.mapRowToRequest(result.rows[0]);
   }
 
-  // request.repository.ts
   async list(params: {
     employeeId?: string;
     status?: string;

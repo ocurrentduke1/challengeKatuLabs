@@ -24,7 +24,7 @@ export class RequestService {
   async createRequest(input: CreateRequestInput): Promise<VacationRequest> {
     const { employeeId, type, startDate, endDate, startTime, endTime } = input;
 
-    // 0️⃣ Validar fechas base
+    // Validar fechas base
     if (!startDate || !endDate) {
       throw new ValidationError("Start date and end date are required");
     }
@@ -47,22 +47,21 @@ export class RequestService {
       throw new ValidationError("Start date cannot be in the past");
     }
 
-    // 1️⃣ Verificar que el empleado existe
+    // Verificar que el empleado existe
     const employee = await this.employeeRepo.findById(employeeId);
     if (!employee) {
       throw new NotFoundError("Employee not found");
     }
 
-    // 2️⃣ Validaciones específicas por tipo
+    // Validaciones específicas por tipo
     if (type === "VACATION") {
-      // 🔒 Vacaciones NO usan horas
       if (startTime || endTime) {
         throw new ValidationError(
           "startTime and endTime must be null for vacations"
         );
       }
 
-      // 2.1 Validar traslapes por FECHA
+      // Validar traslapes por FECHA
       const overlapping = await this.requestRepo.findApprovedByEmployeeInRange(
         employeeId,
         start,
@@ -75,7 +74,7 @@ export class RequestService {
         );
       }
 
-      // 2.2 Validar saldo
+      // Validar saldo
       const balance = await this.employeeService.getVacationBalance(employeeId);
 
       const requestedDays =
@@ -87,7 +86,6 @@ export class RequestService {
     }
 
     if (type === "PERMISSION") {
-      // 🔒 Permisos SON por tiempo
       if (!startTime || !endTime) {
         throw new ValidationError(
           "startTime and endTime are required for permissions"
@@ -112,7 +110,7 @@ export class RequestService {
         throw new ValidationError("startTime must be before endTime");
       }
 
-      // 2.3 Validar traslapes por FECHA + HORA
+      // Validar traslapes por FECHA + HORA
       const overlapping =
         await this.requestRepo.findApprovedPermissionsOverlapping(
           employeeId,
@@ -128,14 +126,14 @@ export class RequestService {
       }
     }
 
-    // 3️⃣ Crear solicitud
+    // Crear solicitud
     const request = await this.requestRepo.create({
       ...input,
       startDate: start,
       endDate: end,
     });
 
-    // 4️⃣ Guardar historial (CREATED → PENDING)
+    // Guardar historial (CREATED → PENDING)
     await this.statusHistoryRepo.create({
       requestId: request.id,
       previousStatus: "CREATED",
@@ -191,7 +189,7 @@ export class RequestService {
         throw new ValidationError("Insufficient vacation balance");
       }
 
-      // 🔻 Descuento priorizando carriedOverDays
+      // Descuento priorizando carriedOverDays
       let remaining = requestedDays;
 
       const usedCarriedOver = Math.min(employee.carriedOverDays, remaining);
@@ -205,14 +203,14 @@ export class RequestService {
       });
     }
 
-    // 1️⃣ Actualizar estado
+    // Actualizar estado
     const updatedRequest = await this.requestRepo.updateStatus(
       requestId,
       "APPROVED",
       approverId
     );
 
-    // 2️⃣ Guardar historial
+    // Guardar historial
     await this.statusHistoryRepo.create({
       requestId,
       previousStatus: request.status, // PENDING
@@ -236,14 +234,14 @@ export class RequestService {
       throw new ValidationError("Only pending requests can be rejected");
     }
 
-    // 1️⃣ Actualizar estado
+    // Actualizar estado
     const updatedRequest = await this.requestRepo.updateStatus(
       requestId,
       "REJECTED",
       approverId
     );
 
-    // 2️⃣ Guardar historial
+    // Guardar historial
     await this.statusHistoryRepo.create({
       requestId,
       previousStatus: request.status, // PENDING
@@ -271,13 +269,13 @@ export class RequestService {
       throw new ValidationError("Only pending requests can be cancelled");
     }
 
-    // 1️⃣ Actualizar estado
+    // Actualizar estado
     const updatedRequest = await this.requestRepo.updateStatus(
       requestId,
       "CANCELLED"
     );
 
-    // 2️⃣ Guardar historial
+    // Guardar historial
     await this.statusHistoryRepo.create({
       requestId,
       previousStatus: request.status, // PENDING
@@ -300,7 +298,6 @@ export class RequestService {
     return undefined;
   }
 
-  // request.service.ts
   async listRequests(params: {
     employeeId?: string;
     status?: string;
